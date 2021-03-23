@@ -1,0 +1,2 @@
+# ESurfingKeepAlive
+ 用于天翼校园宽带客户端自动重拨号的AutoHotKey脚本
