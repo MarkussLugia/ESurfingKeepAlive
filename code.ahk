@@ -5,30 +5,34 @@ initCheck(){
     if (!checkConnection(1500)){
         if (!checkConnection(3000)){
             if (!checkConnection(4500)){
-                restartDial()
+                restartAndDial()
             }
         }
     }
 }
 
-restartDial(){
-    while (processExist("ESurfingClient.exe") | processExist("SelfDebugTool.exe")){
-        try{
-            processClose("ESurfingClient.exe")
-            processClose("SelfDebugTool.exe")
-        }
-    }
+restartAndDial(){
+    try processClose("ESurfingClient.exe")
+    try processClose("SelfDebugTool.exe")
     run "C:\Program Files (x86)\Chinatelecom_JSPortal\ESurfingClient.exe"
-    sleep(12000)
-    try winClose("ahk_id" winGetID("Windows 安全中心警告 ahk_exe ESurfingClient.exe"))
-    sleep(800)
-    WinGetPos(, , Width, Height, "ahk_exe ESurfingClient.exe")
-    X := Width*0.5
-    Y := Height * 0.55
-    controlClick("x" X " y" Y, "ahk_exe ESurfingClient.exe")
     sleep(8000)
-    try winClose("ahk_id" winGetID("Windows 安全中心警告 ahk_exe ESurfingClient.exe"))
-    if (!checkConnection(3000)){
+    clickDialButton()
+    if !checkConnection(1500) clickDialButton()
+    sleep(6000)
+    if !checkConnection(1500) clickDialButton()
+    sleep(4000)
+    if !checkConnection(3000) clickDialButton()
+}
+
+clickDialButton(){
+    try{
+        winClose("ahk_id" winGetID("Windows 安全中心警告 ahk_exe ESurfingClient.exe"))
+        sleep(1000)
+    }
+    try{
+        WinGetPos(, , Width, Height, "ahk_exe ESurfingClient.exe")
+        X := Width/2
+        Y := Height/1.8
         controlClick("x" X " y" Y, "ahk_exe ESurfingClient.exe")
     }
 }
