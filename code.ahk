@@ -17,11 +17,22 @@ restartAndDial(){
     run "C:\Program Files (x86)\Chinatelecom_JSPortal\ESurfingClient.exe"
     sleep(8000)
     clickDialButton()
-    if (!checkConnection(1500)) clickDialButton()
-    sleep(6000)
-    if (!checkConnection(1500)) clickDialButton()
-    sleep(4000)
-    if (!checkConnection(3000)) clickDialButton()
+    sleep(2000)
+    if (!checkConnection(1500)){
+        clickDialButton()
+        sleep(4000)
+        if (!checkConnection(1500)){
+            clickDialButton()
+            sleep(6000)
+            if (!checkConnection(1500)){
+                clickDialButton()
+                sleep(8000)
+                if (!checkConnection(1500)){
+                    clickDialButton()
+                }
+            }
+        }
+    }
 }
 
 clickDialButton(){
