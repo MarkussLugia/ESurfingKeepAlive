@@ -1,4 +1,5 @@
 setTimer("initCheck",45000)
+Thread "NoTimers", 1
 initCheck()
 
 initCheck(){
@@ -17,21 +18,12 @@ restartAndDial(){
     run "C:\Program Files (x86)\Chinatelecom_JSPortal\ESurfingClient.exe"
     sleep(8000)
     clickDialButton()
-    sleep(2000)
-    if (!checkConnection(1500)){
+    c := 0
+    sleep(4000)
+    while ((!checkConnection(2000)) & (c<18)){
         clickDialButton()
-        sleep(4000)
-        if (!checkConnection(1500)){
-            clickDialButton()
-            sleep(6000)
-            if (!checkConnection(1500)){
-                clickDialButton()
-                sleep(8000)
-                if (!checkConnection(1500)){
-                    clickDialButton()
-                }
-            }
-        }
+        sleep(6000)
+        c := c + 1
     }
 }
 
@@ -57,7 +49,7 @@ checkConnection(timeOut){
         Captive.send()
         statusCode := Captive.Status
     }
-    if(statusCode = 204){
+    if (statusCode = 204){
         return 1
     }
     else{
